@@ -4,7 +4,7 @@ import { join } from 'node:path';
 import { describe, it } from 'node:test';
 
 const SRC = join(import.meta.dirname, '..', 'src');
-const LAYERS = ['adapters', 'application', 'domain', 'ports'];
+const LAYERS = ['application', 'domain', 'ports'];
 
 // lint の層の検査は層のディレクトリと index.ts にしか掛からないので、src の直下に置けるものを閉じる
 describe('src の直下', () => {
