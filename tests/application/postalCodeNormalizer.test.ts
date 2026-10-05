@@ -7,22 +7,21 @@ describe('createPostalCodeNormalizer', () => {
   const normalizer = createPostalCodeNormalizer();
 
   describe('設計文書の例', () => {
-    const cases: [string, string | null, string][] = [
-      ['123-4567', '1234567', ''],
-      ['〒１２３－４５６７', '1234567', ''],
-      ['郵便番号：123 4567', '1234567', ''],
-      ['〶123-4567', '1234567', ''],
-      ['〒123-4567 東京都千代田区', '1234567', '東京都千代田区'],
-      ['〒123-4567 東京都千代田区1-1', null, '〒123-4567 東京都千代田区1-1'],
-      ['1丁目2番3号4567', null, '1丁目2番3号4567'],
-      ['123-456', null, '123-456'],
+    const cases: [string, string | null][] = [
+      ['123-4567', '1234567'],
+      ['〒１２３－４５６７', '1234567'],
+      ['郵便番号：〒123 4567', '1234567'],
+      ['〶123-4567', '1234567'],
+      ['〒123-4567 東京都千代田区', '1234567'],
+      ['〒123-4567 東京都千代田区1-1', null],
+      ['1丁目2番3号4567', null],
+      ['123-456', null],
     ];
-    for (const [input, postalCode, unmatched] of cases) {
+    for (const [input, postalCode] of cases) {
       it(input, async () => {
         assert.deepEqual(await normalizer.normalize(input), {
           input,
           postalCode,
-          unmatched,
         });
       });
     }

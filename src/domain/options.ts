@@ -15,10 +15,7 @@ import type {
   StyledField,
 } from '../ports/postalCodeResult.ts';
 
-const STYLED_FIELDS = [
-  'postalCode',
-  'unmatched',
-] as const satisfies readonly StyledField[];
+const STYLED_FIELDS = ['postalCode'] as const satisfies readonly StyledField[];
 // StyledField に項目を足して STYLED_FIELDS に足し忘れたら typecheck で落とす
 const _coversAllStyledFields: Exclude<
   StyledField,
@@ -92,7 +89,6 @@ const toStyles = (
   };
   return {
     postalCode: resolve('postalCode'),
-    unmatched: resolve('unmatched'),
   };
 };
 

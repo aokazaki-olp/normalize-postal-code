@@ -9,7 +9,7 @@ describe('prepareOptions', () => {
     const prepared = prepareOptions(undefined);
     assert.deepEqual(prepared, prepareOptions({}));
     assert.equal(prepared.hyphen, false);
-    assert.deepEqual(prepared.styles, { postalCode: {}, unmatched: {} });
+    assert.deepEqual(prepared.styles, { postalCode: {} });
   });
   it('hyphen を受ける', () => {
     assert.equal(prepareOptions({ hyphen: true }).hyphen, true);
@@ -25,13 +25,12 @@ describe('prepareOptions', () => {
       digit: 'full',
       symbol: 'full',
     });
-    assert.deepEqual(prepared.styles.unmatched, { digit: 'full' });
   });
   it('項目ごとの指定が false なら当てない', () => {
     const prepared = prepareOptions({
-      style: { default: { digit: 'full' }, fields: { unmatched: false } },
+      style: { default: { digit: 'full' }, fields: { postalCode: false } },
     });
-    assert.equal(prepared.styles.unmatched, undefined);
+    assert.equal(prepared.styles.postalCode, undefined);
   });
 
   describe('検査を満たさなければ TypeError', () => {
@@ -43,7 +42,7 @@ describe('prepareOptions', () => {
       ['style が object でない', { style: 1 }],
       ['style.default が object でない', { style: { default: 'full' } }],
       ['style.fields が object でない', { style: { fields: [] } }],
-      ['style.fields に無い項目', { style: { fields: { block: {} } } }],
+      ['style.fields に無い項目', { style: { fields: { unmatched: {} } } }],
       [
         'style.fields の値が object でも false でもない',
         { style: { fields: { postalCode: true } } },

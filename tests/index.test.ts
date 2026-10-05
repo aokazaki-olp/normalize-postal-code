@@ -14,7 +14,6 @@ describe('公開面', () => {
     assert.deepEqual(await normalizer.normalize('〒1234567'), {
       input: '〒1234567',
       postalCode: '123-4567',
-      unmatched: '',
     });
   });
 });
