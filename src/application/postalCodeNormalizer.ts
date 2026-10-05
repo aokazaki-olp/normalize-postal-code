@@ -23,12 +23,15 @@ export const createPostalCodeNormalizer = (
 ): PostalCodeNormalizer => {
   const prepared = prepareOptions(options);
   return {
-    // 同期で済むが、系列の正規化器にそろえて Promise を返す（入力の誤りも、住所と同じく拒否された Promise で返す）
+    // 同期で済むが、系列の正規化器にそろえて Promise を返す。executor の中で投げたものは、住所と同じく拒否された Promise になる
     normalize: (input) =>
-      typeof input === 'string'
-        ? Promise.resolve(
-            buildResult(input, readPostalCode(guardedNfkc(input)), prepared),
-          )
-        : Promise.reject(new TypeError('input には string を指定してください')),
+      new Promise((resolve) => {
+        if (typeof input !== 'string') {
+          throw new TypeError('input には string を指定してください');
+        }
+        resolve(
+          buildResult(input, readPostalCode(guardedNfkc(input)), prepared),
+        );
+      }),
   };
 };

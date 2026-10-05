@@ -7,7 +7,7 @@
 import { applyCharStyle, type CharStyle } from '@arihirookazaki/normalize-core';
 import type { PostalCodeResult } from '../ports/postalCodeResult.ts';
 import type { PreparedOptions } from './options.ts';
-import type { ReadPostalCode } from './readPostalCode.ts';
+import type { PostalCodeReading } from './readPostalCode.ts';
 
 const styleField = (text: string, style: CharStyle | undefined): string =>
   style === undefined ? text : applyCharStyle(text, style);
@@ -22,7 +22,7 @@ const styleField = (text: string, style: CharStyle | undefined): string =>
  */
 export const buildResult = (
   input: string,
-  read: ReadPostalCode,
+  read: PostalCodeReading,
   options: PreparedOptions,
 ): PostalCodeResult => {
   const { digits } = read;
