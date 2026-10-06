@@ -68,7 +68,7 @@ const TS_RESTRICTED_SYNTAX = [
   },
 ];
 
-const LAYERS = ['application', 'domain', 'ports', 'adapters'];
+const LAYERS = ['application', 'domain', 'ports'];
 const layerFiles = (layer) => [`src/${layer}/**/*.ts`, `src/${layer}/**/*.mts`];
 
 // docs/design.md の「レイヤーと依存の向き」の表
@@ -76,7 +76,7 @@ const LAYER_TABLE = [
   {
     name: 'index.ts',
     files: ['src/index.ts'],
-    allowed: ['application', 'adapters', 'ports'],
+    allowed: ['application', 'ports'],
     external: 'core-types',
   },
   {
@@ -96,12 +96,6 @@ const LAYER_TABLE = [
     files: layerFiles('ports'),
     allowed: [],
     external: 'core-types',
-  },
-  {
-    name: 'adapters',
-    files: layerFiles('adapters'),
-    allowed: ['ports'],
-    external: 'all',
   },
 ];
 
