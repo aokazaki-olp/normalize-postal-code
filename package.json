@@ -36,10 +36,10 @@
     "dist"
   ],
   "dependencies": {
-    "@arihirookazaki/normalize-core": "git+https://github.com/aokazaki-olp/normalize-core.git#ebfdd15"
+    "@arihirookazaki/normalize-core": "git+https://github.com/aokazaki-olp/normalize-core.git#794e2f9"
   },
   "allowScripts": {
-    "git+https://github.com/aokazaki-olp/normalize-core.git#ebfdd15": true
+    "git+https://github.com/aokazaki-olp/normalize-core.git#794e2f9": true
   },
   "bundleDependencies": [
     "@arihirookazaki/normalize-core"

@@ -45,6 +45,16 @@ describe('createPostalCodeNormalizer', () => {
     );
   });
 
+  it('数字の間に10万字の全角の区切りがあっても短い時間で返す', async () => {
+    const input = `１２３${'－'.repeat(100_000)}４５６７`;
+    const start = performance.now();
+    const result = await createPostalCodeNormalizer({ hyphen: true }).normalize(
+      input,
+    );
+    assert.ok(performance.now() - start < 500);
+    assert.equal(result.postalCode, '123-4567');
+  });
+
   it('input が文字列でなければ拒否する', async () => {
     await assert.rejects(
       normalizer.normalize(1234567 as unknown as string),

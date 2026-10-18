@@ -4,7 +4,7 @@
  * @description 読み取った郵便番号から、出力を組み立てる
  */
 
-import { applyCharStyle } from '@arihirookazaki/normalize-core';
+import { CharStyle } from '@arihirookazaki/normalize-core';
 import type { PostalCodeResult } from '../ports/postalCodeResult.ts';
 import type { PreparedOptions } from './options.ts';
 
@@ -31,6 +31,6 @@ export const buildResult = (
   return {
     input,
     postalCode:
-      style === undefined ? postalCode : applyCharStyle(postalCode, style),
+      style === undefined ? postalCode : CharStyle.apply(postalCode, style),
   };
 };

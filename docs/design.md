@@ -38,7 +38,7 @@ export interface PostalCodeResult {
 - `normalize` は同期で済むが、系列にそろえて `Promise` を返す
 - 入力の誤り（`input` が文字列でない、options が検査を満たさない）は `TypeError`。ほかに投げるものは無いので、エラーのクラスは作らない（系列の決まり）
 - `unmatched` は置かない。入力を部分に分けないので、残りの使い道は余計な文字の有無くらいで、切り出しが複雑さと不具合（印の除去・記号のかけら・ReDoS）の元だった（ユーザーの決定、系列の決まりもあわせて直した）
-- `PostalCodeStyle` は `{ default?: CharStyle; fields?: Partial<Record<'postalCode', CharStyle | false>> }`（項目は1つだが、系列の形にそろえる）。既定は ASCII の95字を半角にする（住所と同じ）。`hyphen` で入れたハイフンにも字形の指定がかかる（`symbol: 'full'` なら `－`）
+- `PostalCodeStyle` は `{ default?: CharStyle; fields?: Partial<Record<'postalCode', CharStyle | false>> }`（項目は1つだが、系列の形にそろえる。normalize-core の `FieldStyle<'postalCode'>` と同じ形で、公開の型の TSDoc を付けるために自分の interface として持つ）。検査とマージは `create` で1回だけ、normalize-core の `CharStyle.prepareFields` で行う（マージした指定は `CharStyle.apply` と同じ検査にかかる）。既定は ASCII の95字を半角にする（住所と同じ）。`hyphen` で入れたハイフンにも字形の指定がかかる（`symbol: 'full'` なら `－`）
 
 ## 処理の流れ
 
@@ -80,11 +80,11 @@ src/
 | `ports/`       | なし                  | `@arihirookazaki/normalize-core`（型だけ）         |
 
 - I/O は無い。adapters の層は置かない
-- この表を lint で止める（eslint.config.js は normalize-address の層の検査を写したもの）
+- この表を lint で止める（eslint.config.js は normalize-address のものと、層の表を除いて同じ）
 
 ## 依存
 
-- `@arihirookazaki/normalize-core`：ガード付き NFKC、横棒の集合（`HORIZONTAL_BAR_PATTERN`）、字形の指定（`applyCharStyle`・`mergeCharStyle`）。Git の URL で書き、`bundleDependencies` で同梱する（系列の配り方）
+- `@arihirookazaki/normalize-core`：ガード付き NFKC、横棒の集合（`HORIZONTAL_BAR_PATTERN`）、字形の指定（値のオブジェクト `CharStyle` の `apply`・`prepareFields`。index.ts は型の `CharStyle` だけを再公開し、同じ名前の値は再公開しない）。Git の URL で書き、`bundleDependencies` で同梱する（系列の配り方）
 
 ## 既知の制限
 

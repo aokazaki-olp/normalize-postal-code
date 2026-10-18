@@ -2,7 +2,6 @@ import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
 
 import { prepareOptions } from '../../src/domain/options.ts';
-import type { PostalCodeNormalizerOptions } from '../../src/ports/postalCodeResult.ts';
 
 describe('prepareOptions', () => {
   it('指定が無ければ、どの項目の指定も空で、hyphen は false', () => {
@@ -34,7 +33,7 @@ describe('prepareOptions', () => {
   });
 
   describe('検査を満たさなければ TypeError', () => {
-    const cases: [string, unknown][] = [
+    const cases: [string, any][] = [
       ['options が object でない', 'x'],
       ['options が null', null],
       ['options が配列', []],
@@ -51,10 +50,7 @@ describe('prepareOptions', () => {
     ];
     for (const [name, options] of cases) {
       it(name, () => {
-        assert.throws(
-          () => prepareOptions(options as PostalCodeNormalizerOptions),
-          TypeError,
-        );
+        assert.throws(() => prepareOptions(options), TypeError);
       });
     }
   });
