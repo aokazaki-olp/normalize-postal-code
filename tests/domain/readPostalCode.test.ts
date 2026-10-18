@@ -50,4 +50,21 @@ describe('readPostalCode', () => {
       });
     }
   });
+
+  describe('長い入力', () => {
+    it('数字の間に100万字の区切りがあっても短い時間で読む', () => {
+      const start = performance.now();
+      const result = readPostalCode(`123${'ー'.repeat(1_000_000)}4567`);
+      assert.ok(performance.now() - start < 500);
+      assert.equal(result, '1234567');
+    });
+    it('100万字の区切りの中に文字が1つあれば、短い時間で読まない', () => {
+      const start = performance.now();
+      const result = readPostalCode(
+        `123${'-'.repeat(500_000)}あ${'-'.repeat(500_000)}4567`,
+      );
+      assert.ok(performance.now() - start < 500);
+      assert.equal(result, null);
+    });
+  });
 });
