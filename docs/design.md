@@ -80,7 +80,7 @@ src/
 | `ports/`       | なし                  | `@arihirookazaki/normalize-core`（型だけ）         |
 
 - I/O は無い。adapters の層は置かない
-- この表を lint で止める（eslint.config.js は normalize-address の層の検査を写したもの）
+- この表を lint で止める（eslint.config.js は normalize-address のものと、層の表を除いて同じ）
 
 ## 依存
 
